@@ -1,0 +1,132 @@
+<html>
+<script>
+	$('#tech-affix').affix(CONST_AFFIX_SETTINGS);
+	$(this).find("ul.nav").on("click","li",function(){
+		replaceHash("!/tech/"+$(this).children("a").eq(0).data("section"));
+	});
+	$("body").scrollspy({target:"#tech-affix",offset:48});
+</script>
+
+<style>
+	table{width: 100%;background-color: rgba(217, 237, 247, 0.3)}
+	td,th{border:1px solid rgba(66, 139, 202, 0.4);vertical-align: middle;text-align: center;padding: 3px 7px;}
+	td.l{text-align: right;font-weight: lighter;}
+</style>
+
+<body>
+	<div>
+	<div id="tech-sidebar"><nav id="tech-affix" data-spy="affix" class="sidebar">
+		<ul class="nav">
+			<li><a data-target="._article_1" data-section="1">Abstract</a></li>
+			<li><a data-target="._article_2" data-section="2">Technical details</a></li>
+			<li><a data-target="._article_2-1" data-section="2.1"> - Responsive</a></li>
+			<li><a data-target="._article_2-2" data-section="2.2"> - Transition</a></li>
+			<li><a data-target="._article_2-3" data-section="2.3"> - Web Font</a></li>
+			<li><a data-target="._article_2-4" data-section="2.4"> - AJAX &amp; Caching</a></li>
+			<li><a data-target="._article_2-5" data-section="2.5"> - HashChange</a></li>
+			<li><a data-target="._article_2-6" data-section="2.6"> - Components</a></li>
+			<li><a data-target="._article_3" data-section="3">Browsers Supported</a></li>
+			<li><a data-target="._article_4" data-section="4">The End</a></li>
+		</ul>
+	</nav></div>
+	<div id="tech-content" class="sidebar-content">
+		<h1 class="_article_1" data-hashid="1">Abstract</h1>
+		<p>
+很高興你能在茫茫原始碼中找到這個頁面。這個網頁算是小試身手，但也用到了不少技術。「記者，所以備而不忘也。」我開了這個頁面，記錄下開發過程用到的資料、想過的事情，希望能夠讓學習者與愛好網頁的同好互相交流。
+		</p>
+		<p>
+現今的瀏覽器功能已經越來越強大，然而能否順利支援舊的瀏覽器，一直是前端開發者所需考慮的一個重要議題。像是 IE7、IE8，由於可以做的事情太過簡陋，我最後決定放棄支援它們。
+		</p>
+		<h1 class="_article_2" data-hashid="2">Technical details</h1>
+		<p class="readable-text">
+這個網頁使用 HTML5 + JavaScript + CSS3 寫成。這網頁有許多特殊的設計，有些是參考去年網頁，有些則是新的嘗試。比如說，撰寫時盡可能考慮到各種螢幕大小之下都能方便的觀看網頁，遵循著「自適應網頁設計(Responsive Web Design)」。使用 AJAX 方法載入頁面，使用者瀏覽頁面時可以有流暢的轉場特效，而不會讓網頁重新整理，速度提升，也較節省流量與伺服器負擔。這些技術資訊留待下文細述。
+		</p>
+		<h2 class="_article_2-1" data-hashid="2.1">Responsive Web Design</h2>
+		<p>
+這個網頁是以寬度為判斷使用者裝置之基準，這在 CSS 中可以簡單地用 media query 達成。設定在不同寬度下應該新增或複寫的規則，依照順序擺放，一層一層套用即可。斷點(breakpoints)有些是參照 Twitter Bootstrap 預設規則訂定。像是導覽列 (navigation bar)，在寬度不夠顯示的時候會隱藏起來。
+		</p>
+		<h2 class="_article_2-2" data-hashid="2.2">CSS3 Transition</h2>
+		<p>
+除了頁面捲動使用到 jQuery 的動畫之外，其他都是用 CSS Transition 設計的。這樣效能會比較好(GPU 加速？我也不是很了解)，但是某些瀏覽器(如 IE8 以前)似乎不能正常使用。
+		</p>
+		<h2 class="_article_2-3" data-hashid="2.3">@font-face Web Font</h2>
+		<p>
+英文字型使用Google Web Font上面的 Oxygen (氧氣？)，個人覺得很漂亮。中文字型檔案太大了所以放棄。
+		</p>
+		<h2 class="_article_2-4" data-hashid="2.4">AJAX &amp; Caching</h2>
+		<p>
+使用 AJAX 方式載入內部的資料。並將 script 一起包在裡面。這比較特別，因為直接在 HTML 中加入 script tag 是無效的，而且恐怕會汙染全域變數，破壞模組化，因此包在函式內重新用 eval 解析，這方法並不好。
+		</p>
+		<p>
+另外，我建立了一個物件管理快取(cache)，相同頁面的請求則直接從快取裡拿。這部分判斷很粗糙。
+		</p>
+		<h2 class="_article_2-5" data-hashid="2.5">HashChange Event</h2>
+		<p>
+URL 中 # 後面的字(稱為 hash 或 fragment) 串會造成歷史紀錄(上一頁)，但是不會造成頁面跳掉，只會觸發一個 hashchange 的事件，這樣特定的內容都會有自己的網址，方便加到書籤或分享出去。有趣的是，使用者也可以透過自己修改 hash 來操作頁面。
+		</p>
+		<p>
+我實作的方式為：當需要導到其他頁面時修改 hash 觸發事件，反過來，handler 內分析 hash，導向適當的頁面。這功能和去年的方法(History API)不同，值得留意，而且花了我好多時間構思，並動手擴充網路上找到的 plugin 才終於完成。不過 SEO 優化嘛...，這點沒有考慮到。
+		</p>
+		<h2 class="_article_2-6" data-hashid="2.6">Bootstrap Components</h2>
+		<p>
+不免俗地用了 Bootstrap 裡面超火熱的兩款組件：Affix 和 ScrollSpy。前者用於有條件的固定某區塊，後者則是在使用者滾動頁面時更新選單。這兩個結合(再加上一點原始碼修改)，就變成這個網頁左邊的邊欄了。不過現在我只實作了一個階層的樣式，之後應該還會再修改。
+		</p>
+		<p>
+
+		</p>
+		<h1 class="_article_3" data-hashid="3">Browsers Supported</h1>
+		<p>
+較舊的瀏覽器可能直接忽略新功能、或是雖支援但有 bug，開發者有時必須捨棄新技術才能面面俱到，所以我彙整了一些規準在各大瀏覽器的支援情形。這些資料是在匆促之間查詢的，缺乏親手測試，但不失其參考價值。
+		</p>
+		<table>
+			<tbody>
+				<tr>
+					<th>Browsers</th>
+					<th>IE</th>
+					<th>Firefox</th>
+					<th>Chrome</th>
+					<th>Safari</th>
+					<th>Opera</th>
+					<th>Android</th>
+					<th>iOS</th>
+					<th>Firefox<br/>Mobile</th>
+				</tr>
+				<tr>
+					<td class="l">:before / :after</td>
+					<td>8.0</td><td>1.0</td><td>1.0</td><td>4.0</td><td>4.0</td><td>2.1 (?)</td><td>3.2 (?)</td><td>1.0 (?)</td>
+				</tr>
+				<tr>
+					<td class="l">CSS3 Transitions</td>
+					<td>10.0</td><td>4.0 / 16.0</td><td>1.0 / 26.0</td><td>3.0 / 7.0</td><td>11.6 / 12.10</td><td>2.1 / 4.4</td><td>3.2 (?)</td><td>4.0 / 12.0</td>
+				</tr>
+				<tr>
+					<td class="l">@media</td>
+					<td>9.0</td><td>1.0</td><td>1.0</td><td>1.3</td><td>9.2</td><td>1.0</td><td>3.2 (?)</td><td>1.0</td>
+				</tr>
+				<tr>
+					<td class="l">Linear gradient</td>
+					<td>10.0</td><td>3.6 / 16.0</td><td>5.1 / 7.0</td><td>4.0 / 6.1</td><td>11.10 / 12.10</td><td>2.1 / 4.4</td><td>3.2 / 7.0</td><td>Yes (?)</td>
+				</tr>
+				<tr>
+					<td class="l">Background Size Cover</td>
+					<td>9.0</td><td>3.6</td><td>3.0</td><td>4.1</td><td>10.0</td><td>2.2 / 3.0</td><td>4.0</td><td>8.0 (?)</td>
+				</tr>
+				<tr>
+					<td class="l">Opacity</td>
+					<td>9.0</td><td>1.0</td><td>1.0</td><td>1.2</td><td>9.0</td><td>1.0</td><td>3.2</td><td>1.0</td>
+				</tr>
+			</tbody>
+		</table>
+		<p>
+由此可見，IE 7~8連別的瀏覽器的 1.0 都達不了！因此無法支援。
+		</p>
+		<h1 class="_article_4" data-hashid="4">Comments are welcome!</h1>
+		<p class="readable-text">
+如果有任何疑問或建議，歡迎來信！<br/>
+by 師大附中 74 屆畢典小組　網路組組長　1296 潘廣霖 (andy0130tw)<br/>
+Email: andy20020130(at)gmail(dot)com
+		</p>
+	</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<html>
+<script>
+	var videoArr=[
+		{id:"TOZAf71xS0M",thumb:"v4.jpg",title:"10 秒 預 告",title_disp:"10秒預告"},
+		{id:"RoKqorCEJ5c",thumb:"v3.jpg",title:"後 棚 紀 實",title_disp:"後棚紀實"},
+		{id:"e5Tgk6Dk89o",thumb:"v1.jpg",title:"Official Trailer",title_disp:"Official Trailer"},
+		{id:"Ai1B7S60wrI",thumb:"v2.jpg",title:"慢 舞 示 範",title_disp:"慢舞示範"},
+	];
+
+	var ctrl=$(this).find(".video-grid").eq(0);
+	var buf="";
+	//generate html
+	for(var i=0;i<videoArr.length;i++){
+		var item=videoArr[i];
+		buf+="<div><a class='action-video' data-num='"+(i+1)
+		+"' data-id='"+item.id
+		+"' href='http://www.youtube.com/watch?v="+item.id
+		+"' data-title='"+item.title_disp
+		+"'><img src='image/thumb/video/"+item.thumb
+		+"'/></a><div class='desc'>"+item.title+"</div></div>";
+	}
+	ctrl.empty().html(buf);
+
+	$(".action-video").on("click",function(){
+		var newHash=routie.findAll("!/video/")[1].toURL({num:$(this).data("num")});
+		routie.navigate(newHash);
+		return false;
+	});
+</script>
+<body>
+	<div id="video-content">
+		<h1 style="margin-left: 20px;" class="shadow">相關影片</h1>
+		<p>由於版權緣故，部分影片必須連結至 YouTube 才能播放，敬請見諒！</p>
+		<div class="video-wrapper">
+			<div class="video-grid clearfix">
+			</div>
+		</div>
+
+		<div id="popup-video" class="popup wide mfp-hide">
+			<h2></h2>
+			<iframe width="100%" height="450"></iframe>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,16 @@
+<html>
+<script>
+	var albumArr=[];
+	for(var i=0;i<36;++i){
+		var src="image"+fill(i+1,2)+".jpg";
+		albumArr.push({src:src});
+	}
+	$("#decoration-content").gallery(albumArr,"decoration","decoration");
+</script>
+<body>
+	<h1 class="shadow">校園佈置</h1>
+	<div id="decoration-content">
+		
+	</div>
+</body>
+</html>

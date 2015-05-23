@@ -1,0 +1,55 @@
+<html>
+<style>
+
+/* Override global style */
+/* Because it's placed AFTER all the style, 
+ * the code here is valid.
+ */
+#background-container-deep{
+	opacity: 1;
+	filter: alpha(opacity=100);
+}
+
+body{
+	color: white;
+}
+
+/* only override themes */
+#footer:before{
+	background-color: white;
+	background-color: rgba(255,255,255,.6);
+}
+
+#footer{
+	color: #ddd;
+}
+
+#footer small{
+	color: rgb(200,200,200);
+	color: rgba(200,200,200,.6);
+}
+</style>
+<script>
+$(this).find("a.img-box").magnificPopup({type:"image",gallery:{enabled:true}});
+</script>
+<body>
+	<table id="home-content" style="margin-top: 40px;table-layout:fixed;">
+		<tbody><tr>
+			<td id="home-left">
+				<a id="home-poster" class="img-box" href="image/poster-l.jpg">
+					<img src="image/poster-m.jpg" class="full-width" />
+				</a>
+			</td>
+			<td id="home-gap"></td>
+			<td id="home-right">
+				<a class="img-box" href="image/banner/1.jpg">
+					<img class="full-width" src="image/banner/1.jpg"/>
+				</a>
+				<a class="img-box" href="image/banner/2.jpg">
+					<img class="full-width" src="image/banner/2.jpg"/>
+				</a>
+			</td>
+		</tr></tbody>
+	</table>
+</body>
+</html>

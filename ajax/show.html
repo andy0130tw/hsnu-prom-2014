@@ -1,0 +1,16 @@
+<html>
+<script>
+	var albumArr=[];
+	for(var i=0;i<60;++i){
+		var src="image"+fill(i+1,2)+".jpg";
+		albumArr.push({src:src});
+	}
+	$("#show-content").gallery(albumArr,"show");
+</script>
+<body>
+	<h1 class="shadow">活動實況</h1>
+	<div id="show-content">
+		
+	</div>
+</body>
+</html>
